@@ -81,9 +81,9 @@ export default function FileUpload({ file, onFileSelect, disabled }: FileUploadP
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
               <path d="M16.667 5L7.5 14.167 3.333 10" stroke="#4CAF7D" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
-            <span className="type-body font-semibold text-[#2D2A24]">{file.name}</span>
+            <span className="type-body font-semibold text-cocoa">{file.name}</span>
           </div>
-          <button type="button" onClick={handleRemove} className="type-caption text-[#7A7568] transition-colors hover:text-[#E07A5F]">
+          <button type="button" onClick={handleRemove} className="type-caption text-warm-gray transition-colors hover:text-terracotta">
             Remove
           </button>
         </div>
@@ -98,16 +98,16 @@ export default function FileUpload({ file, onFileSelect, disabled }: FileUploadP
           onDragLeave={handleDragLeave}
           className={`flex cursor-pointer flex-col items-center justify-center rounded-[12px] border-2 border-dashed p-8 transition-colors ${
             dragOver
-              ? 'border-[#E07A5F] bg-[#E07A5F]/5'
+              ? 'border-terracotta bg-terracotta/5'
               : 'border-[#E8E0D8] bg-white hover:border-[#B5AFA6]'
           } ${disabled ? 'pointer-events-none opacity-50' : ''}`}
         >
           <svg width="32" height="32" viewBox="0 0 32 32" fill="none" className="mb-3" aria-hidden="true">
             <path d="M16 20V8m0 0-4 4m4-4 4 4M6 22v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2" stroke="#B5AFA6" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
           </svg>
-          <p className="type-body font-semibold text-[#2D2A24]">Upload PDF</p>
-          <p className="mt-1 type-caption text-[#7A7568]">Drag & drop your lecture notes here</p>
-          <p className="mt-2 type-caption text-[#B5AFA6]">or click to browse</p>
+          <p className="type-body font-semibold text-cocoa">Upload PDF</p>
+          <p className="mt-1 type-caption text-warm-gray">Drag & drop your lecture notes here</p>
+          <p className="mt-2 type-caption text-light-gray">or click to browse</p>
         </div>
       )}
     </div>

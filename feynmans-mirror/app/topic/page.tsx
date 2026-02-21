@@ -94,13 +94,13 @@ export default function TopicPage() {
       <button
         type="button"
         onClick={handleBack}
-        className="type-caption mb-8 inline-flex items-center gap-1 text-[#7A7568] transition-colors hover:text-[#2D2A24]"
+        className="type-caption mb-8 inline-flex items-center gap-1 text-warm-gray transition-colors hover:text-cocoa"
       >
         &larr; Back
       </button>
 
       {/* Title */}
-      <h2 className="type-h2 mb-2 text-[#2D2A24]">
+      <h2 className="type-h2 mb-2 text-cocoa">
         What topic will you teach today?
       </h2>
 
@@ -119,11 +119,11 @@ export default function TopicPage() {
         }}
         placeholder="e.g., Photosynthesis"
         disabled={loading}
-        className="type-body w-full rounded-[12px] border-2 border-[#E8E0D8] bg-white px-4 py-3 placeholder:text-[#B5AFA6] focus:border-[#E07A5F] focus:outline-none focus:ring-2 focus:ring-[#E07A5F]/20 disabled:opacity-50"
+        className="type-body w-full rounded-[12px] border-2 border-[#E8E0D8] bg-white px-4 py-3 placeholder:text-light-gray focus:border-terracotta focus:outline-none focus:ring-2 focus:ring-terracotta/20 disabled:opacity-50"
       />
 
       {/* Hint text */}
-      <p className="type-caption mt-2 text-[#7A7568]">
+      <p className="type-caption mt-2 text-warm-gray">
         Choose a specific subtopic from your uploaded source. The AI will scope
         the evaluation to this area.
       </p>
@@ -133,11 +133,11 @@ export default function TopicPage() {
         type="button"
         onClick={handleStartTeaching}
         disabled={loading || !subtopic.trim()}
-        className="type-button mt-6 rounded-[12px] bg-[#E07A5F] px-6 py-3 text-[#FFFDF9] shadow-sm transition-all hover:bg-[#d06a50] hover:shadow-md disabled:cursor-not-allowed disabled:opacity-50"
+        className="type-button mt-6 rounded-[12px] bg-terracotta px-6 py-3 text-on-accent shadow-sm transition-all hover:bg-[#d06a50] hover:shadow-md disabled:cursor-not-allowed disabled:opacity-50"
       >
         {loading ? (
           <span className="inline-flex items-center gap-2">
-            <span className="inline-block h-4 w-4 animate-pulse rounded-full bg-[#FFFDF9]/60" />
+            <span className="inline-block h-4 w-4 animate-pulse rounded-full bg-on-accent/60" />
             Capy is getting ready to learn...
           </span>
         ) : (
@@ -147,7 +147,7 @@ export default function TopicPage() {
 
       {/* Error display */}
       {error && (
-        <p className="type-body mt-3 text-[#D94C4C]">{error}</p>
+        <p className="type-body mt-3 text-error">{error}</p>
       )}
     </div>
   );

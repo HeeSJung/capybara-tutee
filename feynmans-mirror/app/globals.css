@@ -159,3 +159,66 @@ body {
   font-weight: 700;
   line-height: 1.0;
 }
+
+/* ============================================================
+   Capy Avatar — Keyframes
+   ============================================================ */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+@keyframes bounce {
+  0% { transform: scale(1); }
+  40% { transform: scale(1.08); }
+  100% { transform: scale(1); }
+}
+
+@keyframes tremble {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-1px); }
+  75% { transform: translateX(1px); }
+}
+
+@keyframes thinking-glow {
+  0%, 100% { box-shadow: 0 0 0 rgba(126, 200, 185, 0); }
+  50% { box-shadow: 0 0 16px rgba(126, 200, 185, 0.35); }
+}
+
+/* ============================================================
+   Capy Avatar — Animation Utility Classes
+   ============================================================ */
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-bounce-once {
+  animation: bounce 0.5s ease-out;
+}
+
+.animate-tremble {
+  animation: tremble 0.3s linear infinite;
+}
+
+.animate-thinking-glow {
+  animation: thinking-glow 2s ease-in-out infinite;
+}
+
+/* ============================================================
+   InkMouth — SVG Speaking Keyframes
+   ============================================================ */
+@keyframes speak-open {
+  0% { d: path("M 8 0 Q 12 2 16 0"); }
+  100% { d: path("M 8 0 Q 12 5 16 0"); }
+}
+
+@keyframes speak-closed {
+  0% { d: path("M 8 0 Q 12 5 16 0"); }
+  100% { d: path("M 8 0 Q 12 2 16 0"); }
+}
+
+.animate-speaking path {
+  animation: speak-open 0.3s ease-in-out infinite alternate;
+}
+
+/* Mouth animation is now JS-driven in TuteeAvatar.tsx */

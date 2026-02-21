@@ -77,7 +77,7 @@ export interface Message {
   tuteeState?: TuteeState;
 }
 
-export type TuteeState = 'idle' | 'thinking' | 'confused' | 'test-taking';
+export type TuteeState = 'idle' | 'thinking' | 'test-taking';
 
 // ============================================================
 // GRADING DATA — Test results and report

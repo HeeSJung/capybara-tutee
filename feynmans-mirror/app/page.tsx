@@ -64,8 +64,8 @@ export default function Home() {
       <main className="w-full max-w-[800px] px-8 py-12">
         {/* Header */}
         <div className="mb-10 text-center">
-          <h1 className="type-h1 text-[#2D2A24]">Feynman&apos;s Mirror</h1>
-          <p className="type-body mt-2 text-[#7A7568]">
+          <h1 className="type-h1 text-cocoa">Feynman&apos;s Mirror</h1>
+          <p className="type-body mt-2 text-warm-gray">
             Teach Capy what you&apos;ve learned. Prove you understand.
           </p>
         </div>
@@ -75,7 +75,7 @@ export default function Home() {
 
         {/* Divider */}
         <div className="my-6 text-center">
-          <span className="type-body text-[#B5AFA6]">&mdash; or &mdash;</span>
+          <span className="type-body text-light-gray">&mdash; or &mdash;</span>
         </div>
 
         {/* Text Paste Box */}
@@ -83,12 +83,12 @@ export default function Home() {
           value={pastedText}
           onChange={handleTextChange}
           placeholder="Paste your notes here..."
-          className="type-body w-full min-h-[160px] resize-none rounded-[12px] border-2 border-[#E8E0D8] bg-white p-4 text-[#2D2A24] placeholder:text-[#B5AFA6] focus:border-[#E07A5F] focus:outline-none focus:ring-2 focus:ring-[#E07A5F]/20 transition-colors"
+          className="type-body w-full min-h-[160px] resize-none rounded-[12px] border-2 border-[#E8E0D8] bg-white p-4 text-cocoa placeholder:text-light-gray focus:border-terracotta focus:outline-none focus:ring-2 focus:ring-terracotta/20 transition-colors"
         />
 
         {/* Character count hint */}
         {pastedText.length > 0 && pastedText.length < 500 && (
-          <p className="type-caption mt-1 text-[#B5AFA6]">
+          <p className="type-caption mt-1 text-light-gray">
             {pastedText.length} / 500 characters minimum
           </p>
         )}
@@ -97,13 +97,13 @@ export default function Home() {
         <div className="mt-8 flex flex-col items-center gap-3">
           <button
             onClick={handleContinue}
-            className="type-button rounded-[12px] bg-[#E07A5F] px-6 py-3 text-[#FFFDF9] shadow-sm transition-all hover:bg-[#d06a50] hover:shadow-md"
+            className="type-button rounded-[12px] bg-terracotta px-6 py-3 text-on-accent shadow-sm transition-all hover:bg-[#d06a50] hover:shadow-md"
           >
             Continue &rarr;
           </button>
 
           {error && (
-            <p className="type-body max-w-md text-center text-[#D94C4C]">{error}</p>
+            <p className="type-body max-w-md text-center text-error">{error}</p>
           )}
         </div>
       </main>

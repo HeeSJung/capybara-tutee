@@ -47,9 +47,9 @@ const RESPOND_TOOL: Anthropic.Tool = {
       },
       state: {
         type: 'string',
-        enum: ['idle', 'thinking', 'confused'],
+        enum: ['idle', 'thinking'],
         description:
-          'Capy\'s current emotional state. \'idle\' when understanding, \'confused\' when asking clarifying questions, \'thinking\' when processing',
+          'Capy\'s current emotional state. \'idle\' when understanding, \'thinking\' when processing or asking clarifying questions',
       },
       coveredSubtopics: {
         type: 'array',
