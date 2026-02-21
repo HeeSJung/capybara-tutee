@@ -5,12 +5,33 @@ import { useRouter } from 'next/navigation';
 import { useSession } from '@/lib/session-context';
 import { getStoredFile } from '@/lib/file-store';
 
+const loadingMessages = [
+  'Capy is reading your notes\u2026',
+  'Capy is sharpening his pencil\u2026',
+  'Capy is preparing questions\u2026',
+  'Capy is getting excited to learn\u2026',
+  'Almost ready\u2026',
+];
+
 export default function TopicPage() {
   const { state, setSourceData, setOracleData, setScreen } = useSession();
   const router = useRouter();
   const [subtopic, setSubtopic] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [loadingMsgIndex, setLoadingMsgIndex] = useState(0);
+
+  // Rotate loading messages
+  useEffect(() => {
+    if (!loading) {
+      setLoadingMsgIndex(0);
+      return;
+    }
+    const interval = setInterval(() => {
+      setLoadingMsgIndex((i) => (i + 1) % loadingMessages.length);
+    }, 2500);
+    return () => clearInterval(interval);
+  }, [loading]);
 
   // Guard: redirect to upload if no source data
   useEffect(() => {
@@ -144,6 +165,22 @@ export default function TopicPage() {
           'Start Teaching \u2192'
         )}
       </button>
+
+      {/* Loading animation */}
+      {loading && (
+        <div className="mt-10 flex flex-col items-center gap-4">
+          <div className="animate-float animate-thinking-glow rounded-2xl p-2">
+            <img
+              src="/tutee/idle.png"
+              alt="Capy preparing"
+              className="h-48 w-auto"
+            />
+          </div>
+          <p className="type-body animate-pulse text-warm-gray">
+            {loadingMessages[loadingMsgIndex]}
+          </p>
+        </div>
+      )}
 
       {/* Error display */}
       {error && (

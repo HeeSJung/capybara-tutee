@@ -49,7 +49,7 @@ const RESPOND_TOOL: Anthropic.Tool = {
         type: 'string',
         enum: ['idle', 'thinking'],
         description:
-          'Capy\'s current emotional state. \'idle\' when understanding, \'thinking\' when processing or asking clarifying questions',
+          'Always return \'idle\'. Only use \'thinking\' if Capy is deeply confused and needs a long pause.',
       },
       coveredSubtopics: {
         type: 'array',
@@ -93,7 +93,7 @@ export async function runTutee(
   ];
 
   const response = await client.messages.create({
-    model: 'claude-haiku-4-5-20250514',
+    model: 'claude-haiku-4-5-20251001',
     max_tokens: 300,
     temperature: 0.7,
     system: systemPrompt,

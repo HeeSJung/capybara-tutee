@@ -59,7 +59,7 @@ export async function POST(request: NextRequest) {
         );
         const doneEvent = `event: done\ndata: ${JSON.stringify({
           message: tuteeResponse.message,
-          state: tuteeResponse.state,
+          state: 'idle',
           coveredSubtopics: tuteeResponse.coveredSubtopics,
           uncoveredSubtopics,
         })}\n\n`;

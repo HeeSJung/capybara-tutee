@@ -8,6 +8,7 @@ interface TuteeAvatarProps {
   state: TuteeState;
   isSpeaking?: boolean;
   size?: number;
+  hideLabel?: boolean;
 }
 
 const STATE_LABELS: Record<TuteeState, string | null> = {
@@ -27,7 +28,7 @@ function getAnimationClass(state: TuteeState): string {
   }
 }
 
-export default function TuteeAvatar({ state, isSpeaking = false, size = 200 }: TuteeAvatarProps) {
+export default function TuteeAvatar({ state, isSpeaking = false, size = 200, hideLabel = false }: TuteeAvatarProps) {
   const [currentImage, setCurrentImage] = useState<string>(`/tutee/${state === 'test-taking' ? 'test-taking-1' : state}.png`);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [testFrame, setTestFrame] = useState<1 | 2>(1);
@@ -66,9 +67,13 @@ export default function TuteeAvatar({ state, isSpeaking = false, size = 200 }: T
   useEffect(() => {
     const targetImage = resolveImage(state, 1);
 
-    if (state === 'test-taking') setTestFrame(1);
+    if (state === 'test-taking') {
+      setTestFrame(1);
+      setCurrentImage(targetImage);
+      return;
+    }
 
-    if (targetImage === currentImage && state !== 'test-taking') return;
+    if (targetImage === currentImage) return;
 
     setIsTransitioning(true);
     const timer = setTimeout(() => {
@@ -79,21 +84,17 @@ export default function TuteeAvatar({ state, isSpeaking = false, size = 200 }: T
     return () => clearTimeout(timer);
   }, [state]); // eslint-disable-line react-hooks/exhaustive-deps
 
-  // Test-taking: alternate frames every 1.5s
+  // Test-taking: alternate frames every 1s (instant swap, no fade)
   useEffect(() => {
     if (state !== 'test-taking') return;
 
     const interval = setInterval(() => {
       setTestFrame((prev) => {
         const next = prev === 1 ? 2 : 1;
-        setIsTransitioning(true);
-        setTimeout(() => {
-          setCurrentImage(`/tutee/test-taking-${next}.png`);
-          setTimeout(() => setIsTransitioning(false), 20);
-        }, 150);
+        setCurrentImage(`/tutee/test-taking-${next}.png`);
         return next;
       });
-    }, 1500);
+    }, 1000);
 
     return () => clearInterval(interval);
   }, [state]);
@@ -126,7 +127,7 @@ export default function TuteeAvatar({ state, isSpeaking = false, size = 200 }: T
             className="absolute"
             style={{
               top: '32%',
-              left: '52%',
+              left: '52.5%',
               transform: `translateX(-50%) scaleY(${mouthOpen})`,
               transformOrigin: 'center top',
               width: size * 0.1,
@@ -144,7 +145,7 @@ export default function TuteeAvatar({ state, isSpeaking = false, size = 200 }: T
           </div>
         )}
       </div>
-      {label && (
+      {label && !hideLabel && (
         <p className="type-caption text-warm-gray">{label}</p>
       )}
     </div>

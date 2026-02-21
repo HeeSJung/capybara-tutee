@@ -53,7 +53,7 @@ export async function runOracle(
   subtopic: string,
 ): Promise<OracleOutput> {
   const model = client.getGenerativeModel({
-    model: 'gemini-2.0-flash',
+    model: 'gemini-2.5-flash',
     systemInstruction: SYSTEM_PROMPT,
     generationConfig: {
       temperature: 0.3,

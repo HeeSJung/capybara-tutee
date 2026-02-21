@@ -25,10 +25,12 @@ export default function TeachPage() {
   const [showConfirmDialog, setShowConfirmDialog] = useState(false);
   const [error, setError] = useState('');
   const [tuteeState, setTuteeState] = useState<TuteeState>('idle');
+  const [greetingText, setGreetingText] = useState('');
+  const [greetingDone, setGreetingDone] = useState(false);
 
   const chatScrollRef = useRef<HTMLDivElement>(null);
   const switchedToIdleRef = useRef(false);
-  const isSpeaking = isStreaming && streamingText.length > 0;
+  const isSpeaking = (isStreaming && streamingText.length > 0) || (!greetingDone && greetingText.length > 0);
 
   // Guard: redirect if no oracle data
   useEffect(() => {
@@ -46,6 +48,22 @@ export default function TeachPage() {
     }
   }, [streamingText, tuteeState, updateTuteeState]);
 
+  // Typewriter effect for initial greeting
+  useEffect(() => {
+    if (!state.oracle || greetingDone) return;
+    const fullGreeting = `Hi! I'm Capy! I'm ready to learn about ${state.source.subtopic}. Go ahead and teach me!`;
+    let i = 0;
+    const interval = setInterval(() => {
+      i++;
+      setGreetingText(fullGreeting.slice(0, i));
+      if (i >= fullGreeting.length) {
+        clearInterval(interval);
+        setGreetingDone(true);
+      }
+    }, 25);
+    return () => clearInterval(interval);
+  }, [state.oracle, state.source.subtopic, greetingDone]);
+
   // Auto-scroll chat to bottom on new messages or streaming
   useEffect(() => {
     if (chatScrollRef.current) {
@@ -54,7 +72,7 @@ export default function TeachPage() {
         behavior: 'smooth',
       });
     }
-  }, [state.conversation.messages.length, streamingText]);
+  }, [state.conversation.messages.length, streamingText, greetingText]);
 
   const handleSend = useCallback(
     async (message: string) => {
@@ -211,13 +229,14 @@ export default function TeachPage() {
 
           {/* Scrollable chat messages — document style */}
           <div ref={chatScrollRef} className="min-h-0 flex-1 overflow-y-auto px-8 py-6 space-y-6">
-            {/* Initial greeting */}
+            {/* Initial greeting (typewriter) */}
             <div className="flex items-start gap-3 max-w-[85%]">
               <div className="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-bubble-tutee">
                 <span className="text-xs leading-none">🦫</span>
               </div>
               <p className="type-body leading-relaxed text-cocoa">
-                Hi! I&apos;m Capy! I&apos;m ready to learn about {state.source.subtopic}. Go ahead and teach me!
+                {greetingText}
+                {!greetingDone && <span className="inline-block w-[2px] h-[1em] bg-cocoa/40 align-middle ml-0.5 animate-pulse" />}
               </p>
             </div>
 

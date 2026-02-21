@@ -75,7 +75,7 @@ Now answer these test questions based ONLY on what was taught above:
 ${questionsText}`;
 
   const model = client.getGenerativeModel({
-    model: 'gemini-2.0-flash',
+    model: 'gemini-2.5-flash',
     systemInstruction: TUTEE_TEST_PROMPT,
     generationConfig: {
       temperature: 0.2,
@@ -142,7 +142,7 @@ Key concepts required: ${key?.keyConcepts.join(', ') ?? 'N/A'}`;
     .join('\n\n---\n\n');
 
   const model = client.getGenerativeModel({
-    model: 'gemini-2.0-flash',
+    model: 'gemini-2.5-flash',
     systemInstruction: GRADER_PROMPT,
     generationConfig: {
       temperature: 0.2,
@@ -160,13 +160,15 @@ Key concepts required: ${key?.keyConcepts.join(', ') ?? 'N/A'}`;
   };
 
   // Build the full QuestionResult array with all fields
-  const questionResults: QuestionResult[] = parsed.questionResults.map((r) => {
-    const q = testQuestions.find((tq) => tq.id === r.questionId);
-    const a = tuteeAnswers.find((ta) => ta.questionId === r.questionId);
-    const k = answerKey.find((ak) => ak.questionId === r.questionId);
+  // Match by index as fallback since Gemini may return different questionId formats
+  const questionResults: QuestionResult[] = parsed.questionResults.map((r, idx) => {
+    const q = testQuestions.find((tq) => tq.id === r.questionId) ?? testQuestions[idx];
+    const qId = q?.id ?? r.questionId;
+    const a = tuteeAnswers.find((ta) => ta.questionId === qId) ?? tuteeAnswers[idx];
+    const k = answerKey.find((ak) => ak.questionId === qId) ?? answerKey[idx];
 
     return {
-      questionId: r.questionId,
+      questionId: qId,
       question: q?.question ?? '',
       tuteeAnswer: a?.answer ?? '',
       expectedAnswer: k?.expectedAnswer ?? '',
