@@ -1,7 +1,7 @@
-import Anthropic from '@anthropic-ai/sdk';
+import { GoogleGenerativeAI, SchemaType } from '@google/generative-ai';
 import type { OracleOutput } from '@/lib/types';
 
-const client = new Anthropic();
+const client = new GoogleGenerativeAI(process.env.GOOGLE_GENERATIVE_AI_API_KEY!);
 
 const SYSTEM_PROMPT = `You are an Oracle agent for a study tool. Your job is to analyze source material and generate educational assessment content.
 
@@ -16,78 +16,55 @@ Rules:
 - Answer keys should list key concepts that allow for paraphrased correct answers.
 - Generate between 5 and 10 questions. Never fewer than 3.`;
 
-const TOOL_DEFINITION: Anthropic.Tool = {
-  name: 'generate_assessment',
-  description: 'Generate a structured educational assessment from source material',
-  input_schema: {
-    type: 'object' as const,
-    properties: {
-      topicOutline: {
-        type: 'array',
-        items: { type: 'string' },
-        description: 'List of key subtopic names relevant to the specified topic',
-      },
-      testQuestions: {
-        type: 'array',
-        items: {
-          type: 'object',
-          properties: {
-            id: { type: 'string', description: 'Unique question ID (q1, q2, etc.)' },
-            question: { type: 'string', description: 'The test question' },
-          },
-          required: ['id', 'question'],
+const responseSchema: import('@google/generative-ai').ResponseSchema = {
+  type: SchemaType.OBJECT,
+  properties: {
+    topicOutline: { type: SchemaType.ARRAY, items: { type: SchemaType.STRING } },
+    testQuestions: {
+      type: SchemaType.ARRAY,
+      items: {
+        type: SchemaType.OBJECT,
+        properties: {
+          id: { type: SchemaType.STRING },
+          question: { type: SchemaType.STRING },
         },
-        description: '5-10 test questions assessing conceptual understanding',
-      },
-      answerKey: {
-        type: 'array',
-        items: {
-          type: 'object',
-          properties: {
-            questionId: { type: 'string', description: 'References a testQuestion id' },
-            expectedAnswer: { type: 'string', description: 'The correct answer from the source' },
-            keyConcepts: {
-              type: 'array',
-              items: { type: 'string' },
-              description: 'Core concepts that must be present for a correct answer',
-            },
-            sourceExcerpt: { type: 'string', description: 'Relevant excerpt from source material' },
-          },
-          required: ['questionId', 'expectedAnswer', 'keyConcepts', 'sourceExcerpt'],
-        },
-        description: 'Answer key entries matching each test question',
+        required: ['id', 'question'],
       },
     },
-    required: ['topicOutline', 'testQuestions', 'answerKey'],
+    answerKey: {
+      type: SchemaType.ARRAY,
+      items: {
+        type: SchemaType.OBJECT,
+        properties: {
+          questionId: { type: SchemaType.STRING },
+          expectedAnswer: { type: SchemaType.STRING },
+          keyConcepts: { type: SchemaType.ARRAY, items: { type: SchemaType.STRING } },
+          sourceExcerpt: { type: SchemaType.STRING },
+        },
+        required: ['questionId', 'expectedAnswer', 'keyConcepts', 'sourceExcerpt'],
+      },
+    },
   },
+  required: ['topicOutline', 'testQuestions', 'answerKey'],
 };
 
 export async function runOracle(
   sourceText: string,
   subtopic: string,
 ): Promise<OracleOutput> {
-  const response = await client.messages.create({
-    model: 'claude-sonnet-4-20250514',
-    max_tokens: 4096,
-    temperature: 0.3,
-    system: SYSTEM_PROMPT,
-    tools: [TOOL_DEFINITION],
-    tool_choice: { type: 'tool', name: 'generate_assessment' },
-    messages: [
-      {
-        role: 'user',
-        content: `Source Material:\n\n${sourceText}\n\nSubtopic to assess: ${subtopic}`,
-      },
-    ],
+  const model = client.getGenerativeModel({
+    model: 'gemini-2.0-flash',
+    systemInstruction: SYSTEM_PROMPT,
+    generationConfig: {
+      temperature: 0.3,
+      responseMimeType: 'application/json',
+      responseSchema,
+    },
   });
 
-  const toolUseBlock = response.content.find(
-    (block) => block.type === 'tool_use',
+  const result = await model.generateContent(
+    `Source Material:\n\n${sourceText}\n\nSubtopic to assess: ${subtopic}`,
   );
 
-  if (!toolUseBlock || toolUseBlock.type !== 'tool_use') {
-    throw new Error('Oracle failed: no tool_use block in response');
-  }
-
-  return toolUseBlock.input as OracleOutput;
+  return JSON.parse(result.response.text()) as OracleOutput;
 }
