@@ -9,8 +9,9 @@ const nunito = Nunito({
   weight: ["400", "600", "700"],
 });
 
+
 export const metadata: Metadata = {
-  title: "Feynman's Mirror",
+  title: "Smart Capy",
   description: "Teach Capy what you've learned. Prove you understand.",
 };
 

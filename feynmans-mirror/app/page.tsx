@@ -60,11 +60,18 @@ export default function Home() {
   }
 
   return (
-    <div className="flex min-h-screen items-center justify-center">
-      <main className="w-full max-w-[800px] px-8 py-12">
+    <div className="relative flex min-h-screen items-center justify-center overflow-hidden">
+      {/* Capybara Watermark Background */}
+      <img
+        src="/tutee/thinking.png"
+        alt=""
+        aria-hidden="true"
+        className="pointer-events-none absolute left-1/2 top-[36%] w-[600px] -translate-x-1/2 -translate-y-1/2 opacity-[0.12]"
+      />
+      <main className="relative z-10 w-full max-w-[800px] px-8 py-12">
         {/* Header */}
         <div className="mb-10 text-center">
-          <h1 className="type-h1 text-cocoa">Feynman&apos;s Mirror</h1>
+          <h1 className="type-h1 text-cocoa" style={{ fontFamily: "'Nexila', serif", fontSize: '3.2rem' }}>Smart Capy</h1>
           <p className="type-body mt-2 text-warm-gray">
             Teach Capy what you&apos;ve learned. Prove you understand.
           </p>

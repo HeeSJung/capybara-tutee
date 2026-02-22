@@ -32,38 +32,31 @@ export default function TuteeAvatar({ state, isSpeaking = false, size = 200, hid
   const [currentImage, setCurrentImage] = useState<string>(`/tutee/${state === 'test-taking' ? 'test-taking-1' : state}.png`);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [testFrame, setTestFrame] = useState<1 | 2>(1);
-  // 3 discrete mouth frames: closed (0), half (0.5), full (1)
-  const MOUTH_FRAMES = [0, 0.5, 1] as const;
-  const [mouthFrame, setMouthFrame] = useState(0);
+  // 2 mouth frames: closed (0) and open (1)
+  const [mouthOpen, setMouthOpen] = useState(false);
 
   useEffect(() => {
     if (!isSpeaking) {
-      setMouthFrame(0);
+      setMouthOpen(false);
       return;
     }
 
-    // Snap between frames at randomized intervals (80-180ms)
+    // Toggle between closed and open at randomized intervals
     let timer: ReturnType<typeof setTimeout>;
     const tick = () => {
-      setMouthFrame((prev) => {
-        let next: number;
-        do {
-          next = Math.floor(Math.random() * MOUTH_FRAMES.length);
-        } while (next === prev);
-        return next;
-      });
-      timer = setTimeout(tick, 80 + Math.random() * 100);
+      setMouthOpen((prev) => !prev);
+      timer = setTimeout(tick, 100 + Math.random() * 120);
     };
-    timer = setTimeout(tick, 80 + Math.random() * 100);
+    timer = setTimeout(tick, 100 + Math.random() * 120);
     return () => clearTimeout(timer);
-  }, [isSpeaking]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [isSpeaking]);
 
   const resolveImage = useCallback((s: TuteeState, frame: 1 | 2) => {
     if (s === 'test-taking') return `/tutee/test-taking-${frame}.png`;
     return `/tutee/${s}.png`;
   }, []);
 
-  // Handle state change transitions (fade out -> swap -> fade in)
+  // Handle state change transitions
   useEffect(() => {
     const targetImage = resolveImage(state, 1);
 
@@ -75,13 +68,8 @@ export default function TuteeAvatar({ state, isSpeaking = false, size = 200, hid
 
     if (targetImage === currentImage) return;
 
-    setIsTransitioning(true);
-    const timer = setTimeout(() => {
-      setCurrentImage(targetImage);
-      setTimeout(() => setIsTransitioning(false), 20);
-    }, 150);
-
-    return () => clearTimeout(timer);
+    // Instant swap between idle and thinking (no fade)
+    setCurrentImage(targetImage);
   }, [state]); // eslint-disable-line react-hooks/exhaustive-deps
 
   // Test-taking: alternate frames every 1s (instant swap, no fade)
@@ -100,8 +88,10 @@ export default function TuteeAvatar({ state, isSpeaking = false, size = 200, hid
   }, [state]);
 
   const label = STATE_LABELS[state];
-  const mouthOpen = MOUTH_FRAMES[mouthFrame];
-  const showMouth = isSpeaking && mouthOpen > 0;
+  const showMouth = state === 'idle';
+  const isMouthWideOpen = isSpeaking && mouthOpen;
+  const mouthScaleY = isMouthWideOpen ? 0.6 : 0.1;
+  const mouthScaleX = isMouthWideOpen ? 1 : 0.6;
 
   return (
     <div className="flex flex-col items-center gap-2">
@@ -121,17 +111,18 @@ export default function TuteeAvatar({ state, isSpeaking = false, size = 200, hid
           }}
           priority
         />
-        {/* Speaking mouth overlay — JS-driven with randomized open amount */}
+        {/* Mouth overlay — always visible when idle/thinking, animated when speaking */}
         {showMouth && (
           <div
             className="absolute"
             style={{
               top: '32%',
               left: '52.5%',
-              transform: `translateX(-50%) scaleY(${mouthOpen})`,
-              transformOrigin: 'center top',
+              transform: `translateX(-50%) scaleX(${mouthScaleX}) scaleY(${mouthScaleY})`,
+              transformOrigin: 'center center',
               width: size * 0.1,
               height: size * 0.1,
+              transition: 'transform 60ms ease-in-out',
             }}
           >
             <svg
@@ -139,8 +130,8 @@ export default function TuteeAvatar({ state, isSpeaking = false, size = 200, hid
               fill="none"
               className="w-full h-full"
             >
-              <circle cx="14" cy="14" r="10" fill="#2D2A24" />
-              <ellipse cx="14" cy="11" rx="6" ry="3" fill="#E88B7A" />
+              <ellipse cx="14" cy="14" rx="10" ry="8" fill="#2D2A24" />
+              <ellipse cx="14" cy="12" rx="5" ry="2.5" fill="#E88B7A" style={{ opacity: isMouthWideOpen ? 1 : 0, transition: 'opacity 60ms ease-in-out' }} />
             </svg>
           </div>
         )}

@@ -6,9 +6,9 @@ import { useSession } from '@/lib/session-context';
 import { getStoredFile } from '@/lib/file-store';
 
 const loadingMessages = [
-  'Capy is reading your notes\u2026',
   'Capy is sharpening his pencil\u2026',
-  'Capy is preparing questions\u2026',
+  'Capy is stretching before class\u2026',
+  'Capy is finding a comfy seat\u2026',
   'Capy is getting excited to learn\u2026',
   'Almost ready\u2026',
 ];
@@ -168,17 +168,25 @@ export default function TopicPage() {
 
       {/* Loading animation */}
       {loading && (
-        <div className="mt-10 flex flex-col items-center gap-4">
-          <div className="animate-float animate-thinking-glow rounded-2xl p-2">
+        <div className="mt-10 flex flex-col items-center gap-4" style={{ animation: 'capyEntrance 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards' }}>
+          <div className="animate-float rounded-2xl p-2">
             <img
               src="/tutee/idle.png"
               alt="Capy preparing"
-              className="h-48 w-auto"
+              className="h-64 w-auto"
             />
           </div>
           <p className="type-body animate-pulse text-warm-gray">
             {loadingMessages[loadingMsgIndex]}
           </p>
+          <style jsx>{`
+            @keyframes capyEntrance {
+              0% { opacity: 0; transform: translateY(40px) scale(0.8); }
+              60% { opacity: 1; transform: translateY(-8px) scale(1.02); }
+              80% { transform: translateY(2px) scale(0.99); }
+              100% { transform: translateY(0) scale(1); }
+            }
+          `}</style>
         </div>
       )}
 

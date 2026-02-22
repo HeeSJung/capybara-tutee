@@ -7,6 +7,7 @@ import TuteeAvatar from '@/components/TuteeAvatar';
 import ChatInput from '@/components/ChatInput';
 import HistoryPanel from '@/components/HistoryPanel';
 import type { TuteeState } from '@/lib/types';
+import { useAnimalese } from '@/components/useAnimalese';
 
 export default function TeachPage() {
   const {
@@ -31,6 +32,8 @@ export default function TeachPage() {
   const chatScrollRef = useRef<HTMLDivElement>(null);
   const switchedToIdleRef = useRef(false);
   const isSpeaking = (isStreaming && streamingText.length > 0) || (!greetingDone && greetingText.length > 0);
+
+  useAnimalese(isSpeaking, streamingText);
 
   // Guard: redirect if no oracle data
   useEffect(() => {
@@ -230,10 +233,7 @@ export default function TeachPage() {
           {/* Scrollable chat messages — document style */}
           <div ref={chatScrollRef} className="min-h-0 flex-1 overflow-y-auto px-8 py-6 space-y-6">
             {/* Initial greeting (typewriter) */}
-            <div className="flex items-start gap-3 max-w-[85%]">
-              <div className="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-bubble-tutee">
-                <span className="text-xs leading-none">🦫</span>
-              </div>
+            <div className="max-w-[90%]">
               <p className="type-body leading-relaxed text-cocoa">
                 {greetingText}
                 {!greetingDone && <span className="inline-block w-[2px] h-[1em] bg-cocoa/40 align-middle ml-0.5 animate-pulse" />}
@@ -249,10 +249,7 @@ export default function TeachPage() {
                   </div>
                 </div>
               ) : (
-                <div key={msg.id} className="flex items-start gap-3 max-w-[85%]">
-                  <div className="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-bubble-tutee">
-                    <span className="text-xs leading-none">🦫</span>
-                  </div>
+                <div key={msg.id} className="max-w-[90%]">
                   <p className="type-body leading-relaxed text-cocoa">{msg.content}</p>
                 </div>
               ),
@@ -260,10 +257,7 @@ export default function TeachPage() {
 
             {/* Streaming response */}
             {isStreaming && (
-              <div className="flex items-start gap-3 max-w-[85%]">
-                <div className="mt-1 flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-bubble-tutee">
-                  <span className="text-xs leading-none">🦫</span>
-                </div>
+              <div className="max-w-[90%]">
                 <p className="type-body leading-relaxed text-cocoa">
                   {streamingText || (
                     <span className="inline-flex gap-1 text-warm-gray">
@@ -298,7 +292,7 @@ export default function TeachPage() {
       {/* Confirmation dialog */}
       {showConfirmDialog && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/30">
-          <div className="w-[480px] max-w-[calc(100vw-2rem)] rounded-[20px] bg-white p-8 shadow-lg">
+          <div className="w-[480px] max-w-[calc(100vw-2rem)] rounded-[24px] bg-white p-8 shadow-lg">
             <h3 className="type-h2 mb-3 text-cocoa">Done teaching?</h3>
             <p className="type-body mb-6 text-warm-gray">
               Capy will now take a test based on what you taught. You won&apos;t
