@@ -7,7 +7,7 @@ import { useSession } from '@/lib/session-context';
 import GradingCard from '@/components/GradingCard';
 
 export default function ReportPage() {
-  const { state } = useSession();
+  const { state, resetSession } = useSession();
   const router = useRouter();
 
   useEffect(() => {
@@ -88,7 +88,10 @@ export default function ReportPage() {
       <div className="flex justify-center gap-4" style={{ marginTop: '2.5rem' }}>
         <button
           type="button"
-          onClick={() => router.push('/')}
+          onClick={() => {
+            resetSession();
+            router.push('/');
+          }}
           className="type-button rounded-[12px] bg-terracotta px-6 py-3 text-on-accent shadow-sm transition-all hover:bg-terracotta-dark hover:shadow-md"
         >
           Try Another Topic
