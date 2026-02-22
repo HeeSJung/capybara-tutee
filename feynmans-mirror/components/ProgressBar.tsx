@@ -12,7 +12,7 @@ export default function ProgressBar({ current, total, phase }: ProgressBarProps)
 
   return (
     <div className="w-full" style={{ maxWidth: '400px' }}>
-      <div className="h-2 w-full overflow-hidden rounded-full bg-[#E8E0D8]">
+      <div className="h-2 w-full overflow-hidden rounded-full bg-input-border">
         {isIndeterminate ? (
           <div
             className="h-full rounded-full bg-terracotta"

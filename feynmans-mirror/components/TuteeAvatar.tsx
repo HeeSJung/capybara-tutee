@@ -30,14 +30,13 @@ function getAnimationClass(state: TuteeState): string {
 
 export default function TuteeAvatar({ state, isSpeaking = false, size = 200, hideLabel = false }: TuteeAvatarProps) {
   const [currentImage, setCurrentImage] = useState<string>(`/tutee/${state === 'test-taking' ? 'test-taking-1' : state}.png`);
-  const [isTransitioning, setIsTransitioning] = useState(false);
-  const [testFrame, setTestFrame] = useState<1 | 2>(1);
+  const [, setTestFrame] = useState<1 | 2>(1);
   // 2 mouth frames: closed (0) and open (1)
   const [mouthOpen, setMouthOpen] = useState(false);
 
   useEffect(() => {
     if (!isSpeaking) {
-      setMouthOpen(false);
+      setMouthOpen(false); // eslint-disable-line react-hooks/set-state-in-effect
       return;
     }
 
@@ -61,7 +60,7 @@ export default function TuteeAvatar({ state, isSpeaking = false, size = 200, hid
     const targetImage = resolveImage(state, 1);
 
     if (state === 'test-taking') {
-      setTestFrame(1);
+      setTestFrame(1); // eslint-disable-line react-hooks/set-state-in-effect
       setCurrentImage(targetImage);
       return;
     }
@@ -106,7 +105,7 @@ export default function TuteeAvatar({ state, isSpeaking = false, size = 200, hid
           height={size}
           className="object-cover w-full h-full"
           style={{
-            opacity: isTransitioning ? 0 : 1,
+            opacity: 1,
             transition: 'opacity 150ms ease-in-out',
           }}
           priority

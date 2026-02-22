@@ -126,7 +126,7 @@ export default function TopicPage() {
       </h2>
 
       {/* Source confirmation */}
-      <p className="type-caption mb-8 text-[#4CAF7D]">{sourceLabel}</p>
+      <p className="type-caption mb-8 text-success">{sourceLabel}</p>
 
       {/* Topic input */}
       <input
@@ -140,7 +140,7 @@ export default function TopicPage() {
         }}
         placeholder="e.g., Photosynthesis"
         disabled={loading}
-        className="type-body w-full rounded-[12px] border-2 border-[#E8E0D8] bg-white px-4 py-3 placeholder:text-light-gray focus:border-terracotta focus:outline-none focus:ring-2 focus:ring-terracotta/20 disabled:opacity-50"
+        className="type-body w-full rounded-[12px] border-2 border-input-border bg-white px-4 py-3 placeholder:text-light-gray focus:border-terracotta focus:outline-none focus:ring-2 focus:ring-terracotta/20 disabled:opacity-50"
       />
 
       {/* Hint text */}
@@ -154,7 +154,7 @@ export default function TopicPage() {
         type="button"
         onClick={handleStartTeaching}
         disabled={loading || !subtopic.trim()}
-        className="type-button mt-6 rounded-[12px] bg-terracotta px-6 py-3 text-on-accent shadow-sm transition-all hover:bg-[#d06a50] hover:shadow-md disabled:cursor-not-allowed disabled:opacity-50"
+        className="type-button mt-6 rounded-[12px] bg-terracotta px-6 py-3 text-on-accent shadow-sm transition-all hover:bg-terracotta-dark hover:shadow-md disabled:cursor-not-allowed disabled:opacity-50"
       >
         {loading ? (
           <span className="inline-flex items-center gap-2">

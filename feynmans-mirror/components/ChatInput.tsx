@@ -62,7 +62,7 @@ export default function ChatInput({
         className="
           type-body 
           flex-1 border-2 
-          border-[#E8E0D8] 
+          border-input-border 
           rounded-[12px] 
           bg-white 
           px-4 
@@ -82,7 +82,7 @@ export default function ChatInput({
         type="button"
         onClick={handleSend}
         disabled={isSendDisabled}
-        className="type-button bg-terracotta text-on-accent rounded-[12px] px-5 py-3 hover:bg-[#d06a50] transition-all shadow-sm hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
+        className="type-button bg-terracotta text-on-accent rounded-[12px] px-5 py-3 hover:bg-terracotta-dark transition-all shadow-sm hover:shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
       >
         Send
       </button>

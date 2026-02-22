@@ -30,6 +30,11 @@
   --color-light-gray: #B5AFA6;
   --color-on-accent: #FFFDF9;
 
+  /* Extended Palette */
+  --color-input-border: #E8E0D8;
+  --color-terracotta-dark: #d06a50;
+  --color-surface-muted: #f3f3f0;
+
   /* Semantic Colors */
   --color-success: #4CAF7D;
   --color-success-bg: #E8F5EC;

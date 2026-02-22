@@ -76,10 +76,10 @@ export default function FileUpload({ file, onFileSelect, disabled }: FileUploadP
       />
 
       {file ? (
-        <div className="flex items-center justify-between rounded-[12px] border-2 border-[#E8E0D8] bg-white p-6">
+        <div className="flex items-center justify-between rounded-[12px] border-2 border-input-border bg-white p-6">
           <div className="flex items-center gap-3">
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-              <path d="M16.667 5L7.5 14.167 3.333 10" stroke="#4CAF7D" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+              <path d="M16.667 5L7.5 14.167 3.333 10" stroke="var(--color-success)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
             </svg>
             <span className="type-body font-semibold text-cocoa">{file.name}</span>
           </div>
@@ -99,7 +99,7 @@ export default function FileUpload({ file, onFileSelect, disabled }: FileUploadP
           className={`flex cursor-pointer flex-col items-center justify-center rounded-[12px] border-2 border-dashed p-8 transition-colors ${
             dragOver
               ? 'border-terracotta bg-terracotta/5'
-              : 'border-[#E8E0D8] bg-white hover:border-[#B5AFA6]'
+              : 'border-input-border bg-white hover:border-[#B5AFA6]'
           } ${disabled ? 'pointer-events-none opacity-50' : ''}`}
         >
           <svg width="32" height="32" viewBox="0 0 32 32" fill="none" className="mb-3" aria-hidden="true">

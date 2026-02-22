@@ -144,7 +144,7 @@ export default function TestingPage() {
           <button
             type="button"
             onClick={handleRetry}
-            className="type-button rounded-[12px] bg-terracotta px-6 py-3 text-on-accent shadow-sm transition-all hover:bg-[#d06a50] hover:shadow-md"
+            className="type-button rounded-[12px] bg-terracotta px-6 py-3 text-on-accent shadow-sm transition-all hover:bg-terracotta-dark hover:shadow-md"
           >
             Try again
           </button>

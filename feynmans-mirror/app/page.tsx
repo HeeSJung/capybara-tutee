@@ -90,7 +90,7 @@ export default function Home() {
           value={pastedText}
           onChange={handleTextChange}
           placeholder="Paste your notes here..."
-          className="type-body w-full min-h-[160px] resize-none rounded-[12px] border-2 border-[#E8E0D8] bg-white p-4 text-cocoa placeholder:text-light-gray focus:border-terracotta focus:outline-none focus:ring-2 focus:ring-terracotta/20 transition-colors"
+          className="type-body w-full min-h-[160px] resize-none rounded-[12px] border-2 border-input-border bg-white p-4 text-cocoa placeholder:text-light-gray focus:border-terracotta focus:outline-none focus:ring-2 focus:ring-terracotta/20 transition-colors"
         />
 
         {/* Character count hint */}
@@ -104,7 +104,7 @@ export default function Home() {
         <div className="mt-8 flex flex-col items-center gap-3">
           <button
             onClick={handleContinue}
-            className="type-button rounded-[12px] bg-terracotta px-6 py-3 text-on-accent shadow-sm transition-all hover:bg-[#d06a50] hover:shadow-md"
+            className="type-button rounded-[12px] bg-terracotta px-6 py-3 text-on-accent shadow-sm transition-all hover:bg-terracotta-dark hover:shadow-md"
           >
             Continue &rarr;
           </button>

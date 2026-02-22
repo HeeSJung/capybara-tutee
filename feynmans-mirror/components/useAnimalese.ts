@@ -1,6 +1,7 @@
 import { useRef, useEffect } from 'react';
 
 export function useAnimalese(isSpeaking: boolean, streamingText: string) {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const animaleseRef = useRef<any>(null);
   const lastLengthRef = useRef(0);
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -14,9 +15,10 @@ export function useAnimalese(isSpeaking: boolean, streamingText: string) {
     const script = document.createElement('script');
     script.src = '/animalese/animalese.js';
     script.onload = () => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       animaleseRef.current = new (window as any).Animalese(
         '/animalese/animalese.wav',
-        () => console.log('Animalese loaded')
+        () => {}
       );
     };
     document.head.appendChild(script);

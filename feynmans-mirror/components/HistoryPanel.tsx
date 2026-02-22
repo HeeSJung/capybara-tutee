@@ -62,7 +62,7 @@ export default function HistoryPanel({ messages, isOpen, onClose }: HistoryPanel
         aria-label="Conversation History"
       >
         {/* Header */}
-        <div className="flex items-center justify-between px-4 py-3 border-b border-[#E8E0D8]">
+        <div className="flex items-center justify-between px-4 py-3 border-b border-input-border">
           <h2 className="type-h2 text-cocoa">Conversation History</h2>
           <button
             onClick={onClose}
@@ -91,7 +91,7 @@ export default function HistoryPanel({ messages, isOpen, onClose }: HistoryPanel
                     {isUser ? 'You' : 'Capy'}
                   </span>
                   {isUser ? (
-                    <div className="text-sm rounded-[12px] bg-[#f3f3f0] px-3 py-2 max-w-[80%] break-words text-cocoa">
+                    <div className="text-sm rounded-[12px] bg-surface-muted px-3 py-2 max-w-[80%] break-words text-cocoa">
                       {message.content}
                     </div>
                   ) : (

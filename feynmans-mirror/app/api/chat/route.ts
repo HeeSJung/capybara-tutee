@@ -50,7 +50,7 @@ export async function POST(request: NextRequest) {
           const token = i === 0 ? words[i] : ' ' + words[i];
           const event = `event: token\ndata: ${JSON.stringify({ token })}\n\n`;
           controller.enqueue(encoder.encode(event));
-          await new Promise(resolve => setTimeout(resolve, 30));
+          await new Promise(resolve => setTimeout(resolve, 12));
         }
 
         // Send final done event with full structured response

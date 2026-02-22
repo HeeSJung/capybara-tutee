@@ -194,7 +194,7 @@ export default function TeachPage() {
               {state.oracle.topicOutline.map((item, i) => {
                 const isCovered = state.conversation.coveredSubtopics.includes(item);
                 return (
-                  <li key={i} className={`type-body flex items-start gap-2 ${isCovered ? 'text-[#4CAF7D]' : 'text-warm-gray'}`}>
+                  <li key={i} className={`type-body flex items-start gap-2 ${isCovered ? 'text-success' : 'text-warm-gray'}`}>
                     <span className="mt-0.5">{isCovered ? '\u2713' : '\u2022'}</span>
                     <span className={isCovered ? 'line-through opacity-60' : ''}>{item}</span>
                   </li>
@@ -218,13 +218,13 @@ export default function TeachPage() {
         </div>
 
         {/* Right panel: Chat interface (fixed height, only messages scroll) */}
-        <div className="flex h-screen w-[65%] flex-col border-l border-[#E8E0D8]">
+        <div className="flex h-screen w-[65%] flex-col border-l border-input-border">
           {/* Header */}
-          <div className="flex items-center justify-end px-6 py-4 border-b border-[#E8E0D8]">
+          <div className="flex items-center justify-end px-6 py-4 border-b border-input-border">
             <button
               type="button"
               onClick={() => setShowHistory(true)}
-              className="type-caption rounded-[8px] border border-[#E8E0D8] px-3 py-1.5 text-warm-gray transition-colors hover:border-terracotta hover:text-terracotta"
+              className="type-caption rounded-[8px] border border-input-border px-3 py-1.5 text-warm-gray transition-colors hover:border-terracotta hover:text-terracotta"
             >
               History &#9660;
             </button>
@@ -244,7 +244,7 @@ export default function TeachPage() {
             {state.conversation.messages.map((msg) =>
               msg.role === 'user' ? (
                 <div key={msg.id} className="flex justify-end">
-                  <div className="max-w-[75%] rounded-[16px] bg-[#f3f3f0] px-5 py-3.5">
+                  <div className="max-w-[75%] rounded-[16px] bg-surface-muted px-5 py-3.5">
                     <p className="type-body leading-relaxed text-cocoa">{msg.content}</p>
                   </div>
                 </div>
@@ -272,7 +272,7 @@ export default function TeachPage() {
           </div>
 
           {/* Input bar pinned to bottom */}
-          <div className="border-t border-[#E8E0D8] px-6 py-4">
+          <div className="border-t border-input-border px-6 py-4">
             <ChatInput
               onSend={handleSend}
               onDone={handleDone}
@@ -302,7 +302,7 @@ export default function TeachPage() {
               <button
                 type="button"
                 onClick={handleConfirmDone}
-                className="type-button flex-1 rounded-[12px] bg-terracotta px-5 py-3 text-on-accent shadow-sm transition-all hover:bg-[#d06a50] hover:shadow-md"
+                className="type-button flex-1 rounded-[12px] bg-terracotta px-5 py-3 text-on-accent shadow-sm transition-all hover:bg-terracotta-dark hover:shadow-md"
               >
                 Yes, grade my teaching
               </button>

@@ -1,36 +1,40 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Smart Capy
 
-## Getting Started
+An AI tutee app where you teach a capybara what you've learned — and it tests whether you truly understand.
 
-First, run the development server:
+Built for **HackED 2026** at University of Alberta.
+
+## Tech Stack
+
+- Next.js 16 + React 19 + TypeScript
+- Tailwind CSS v4
+- Claude Haiku 4.5 (tutee agent)
+- Gemini 2.0 Flash (oracle + grader agents)
+- Animalese voice synthesis
+
+## How It Works
+
+Smart Capy uses a 3-agent AI architecture to evaluate your understanding through teaching:
+
+1. **Upload** — Upload a PDF or paste your study notes
+2. **Topic** — The AI oracle reads your material and generates a topic outline
+3. **Teach** — Chat with Capy, explain concepts, and answer Capy's follow-up questions
+4. **Report** — Capy takes a test based on your teaching, and you see a detailed grade breakdown
+
+## Setup
 
 ```bash
+git clone https://github.com/HeeSJung/capybara-tutee.git
+cd capybara-tutee/feynmans-mirror
+cp .env.example .env.local
+# Add your API keys to .env.local
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Required API Keys
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+| Key | Where to get it |
+|-----|----------------|
+| `ANTHROPIC_API_KEY` | [console.anthropic.com](https://console.anthropic.com) |
+| `GOOGLE_GENERATIVE_AI_API_KEY` | [aistudio.google.com](https://aistudio.google.com) |
